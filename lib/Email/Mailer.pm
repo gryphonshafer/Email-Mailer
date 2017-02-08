@@ -3,15 +3,97 @@ package Email::Mailer;
 
 use strict;
 use warnings;
+use HTML::FormatText;
+use HTML::TreeBuilder;
+use IO::All 'io';
+use Email::MIME;
+use Email::MIME::CreateHTML;
+use Email::Sender::Simple 'sendmail';
 
 # VERSION
 
 sub new {
-
+    my $self = shift;
+    $self = ( ref $self ) ? %$self : {@_};
+    $self->{ lc $_ } = delete $self->{$_} for ( grep { /[A-Z]/ } keys %$self );
+    return $self;
 }
 
 sub send {
+    my $self = shift;
 
+    my @mails = map {
+        my $mail = {%$_};
+
+        if ( ref $mail->{process} eq 'CODE' ) {
+            $mail->{$_} = $mail->{process}->( $mail->{$_}, $mail->{data} || {} )
+                for ( grep { ref $mail->{$_} eq 'SCALAR' } keys %$mail );
+        }
+
+        $mail->{text} = HTML::FormatText
+            ->new( leftmargin => 0, rightmargin => 1_000_000 )
+            ->format( HTML::TreeBuilder->new->parse( $mail->{html} ) )
+            if ( $mail->{html} and not $mail->{text} );
+
+        my $headers = {%$mail};
+        delete $headers->{$_} for ( qw( html text embed attachments process data transport ) );
+
+        my $attachments = ( not $mail->{attachments} or ref $mail->{attachments} ne 'ARRAY' ) ? [] : [
+            map {
+                Email::MIME->create(
+                    attributes => {
+                        disposition  => 'attachment',
+                        content_type => $_->{ctype} || 'application/octet-stream',
+                        encoding     => 'quoted-printable',
+                        filename     => $_->{name} || $_->{filename} || $_->{source},
+                        name         => $_->{name} || $_->{filename} || $_->{source},
+                    },
+                    body => ( ( $_->{content} ) ? $_->{content} : io( $_->{source} )->binary->all ),
+                ),
+            } @{ $mail->{attachments} }
+        ];
+
+        my $email_mime;
+        if ( $mail->{text} and not $mail->{html} and @$attachments == 0 ) {
+            $email_mime = Email::MIME->create(
+                header => [%$headers],
+                body   => $mail->{text},
+            );
+        }
+        elsif ( $mail->{text} and not $mail->{html} ) {
+            $email_mime = Email::MIME->create(
+                header     => [%$headers],
+                attributes => { content_type => 'multipart/mixed' },
+                parts      => [
+                    Email::MIME->create(
+                        header => [],
+                        body   => $mail->{text},
+                    ),
+                    @$attachments,
+                ],
+            );
+        }
+        else {
+            $email_mime = Email::MIME->create(
+                header     => [%$headers],
+                attributes => { content_type => 'multipart/mixed' },
+                parts      => [
+                    Email::MIME->create_html(
+                        header    => [],
+                        body      => $mail->{html},
+                        text_body => $mail->{text},
+                        embed     => ( ( $mail->{embed} ) ? 1 : 0 ),
+                    ),
+                    @$attachments,
+                ],
+            );
+        }
+
+        sendmail( $email_mime, $mail->{transport} );
+        $_;
+    } ( ref $_[0] eq 'HASH' ) ? ( map { $self->new(@_) } @_ ) : $self->new(@_);
+
+    return ( wantarray() ) ? (@mails) : \@mails;
 }
 
 1;
@@ -212,15 +294,7 @@ of the mail objects ultimately created.
 
 There are a bunch of parameters you can pass to the primary methods. First off,
 anything not explicitly mentioned in this section, the methods will assume is
-a mail header. It'll alter the key to make it look like a mail header key.
-Spaces become dashes; if there's any upper-case lettering in the key, no attempt
-will be made to alter case. So for example:
-
-=for :list
-* "to" becomes "To"
-* "x-thing" becomes "X-Thing"
-* "x stuff" becomes "X-Stuff"
-* "x whatEver" becomes "x-whatEver"
+a mail header.
 
 If any value of a key is a reference to scalar text, the value of that scalar
 text will be assumed to be a template and processed through the subref defined

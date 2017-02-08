@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-use 5.006;
+use 5.013010;
 
 use ExtUtils::MakeMaker;
 
@@ -14,16 +14,24 @@ my %WriteMakefileArgs = (
   },
   "DISTNAME" => "Email-Mailer",
   "LICENSE" => "perl",
-  "MIN_PERL_VERSION" => "5.006",
+  "MIN_PERL_VERSION" => "5.013010",
   "NAME" => "Email::Mailer",
   "PREREQ_PM" => {
+    "Email::MIME" => 0,
+    "Email::MIME::CreateHTML" => 0,
+    "Email::Sender::Simple" => 0,
+    "HTML::FormatText" => 0,
+    "HTML::TreeBuilder" => 0,
+    "IO::All" => 0,
     "strict" => 0,
     "warnings" => 0
   },
   "TEST_REQUIRES" => {
+    "File::Basename" => 0,
     "File::Spec" => 0,
     "IO::Handle" => 0,
     "IPC::Open3" => 0,
+    "Test::MockObject" => 0,
     "Test::More" => 0,
     "Test::Most" => 0,
     "blib" => "1.01"
@@ -36,9 +44,17 @@ my %WriteMakefileArgs = (
 
 
 my %FallbackPrereqs = (
+  "Email::MIME" => 0,
+  "Email::MIME::CreateHTML" => 0,
+  "Email::Sender::Simple" => 0,
+  "File::Basename" => 0,
   "File::Spec" => 0,
+  "HTML::FormatText" => 0,
+  "HTML::TreeBuilder" => 0,
+  "IO::All" => 0,
   "IO::Handle" => 0,
   "IPC::Open3" => 0,
+  "Test::MockObject" => 0,
   "Test::More" => 0,
   "Test::Most" => 0,
   "blib" => "1.01",

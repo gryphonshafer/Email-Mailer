@@ -194,14 +194,7 @@ of the mail objects ultimately created.
 
 There are a bunch of parameters you can pass to the primary methods. First off,
 anything not explicitly mentioned in this section, the methods will assume is
-a mail header. It'll alter the key to make it look like a mail header key.
-Spaces become dashes; if there's any upper-case lettering in the key, no attempt
-will be made to alter case. So for example:
-
-- "to" becomes "To"
-- "x-thing" becomes "X-Thing"
-- "x stuff" becomes "X-Stuff"
-- "x whatEver" becomes "x-whatEver"
+a mail header.
 
 If any value of a key is a reference to scalar text, the value of that scalar
 text will be assumed to be a template and processed through the subref defined

@@ -1,0 +1,52 @@
+From: from@example.com
+Subject: Test Email
+To: to@example.com
+Date: \w+, \d+ \w+ \d+ \d+:\d+:\d+ -\d+
+MIME-Version: 1\.0
+Content-Type: multipart/mixed; boundary="[^"]+"
+Content-Transfer-Encoding: 7bit
+
+
+--\S+
+Date: \w+, \d+ \w+ \d+ \d+:\d+:\d+ -\d+
+MIME-Version: 1\.0
+Content-Type: multipart/alternative; boundary="[^"]+"
+Content-Transfer-Encoding: 7bit
+
+
+--\S+
+Date: \w+, \d+ \w+ \d+ \d+:\d+:\d+ -\d+
+MIME-Version: 1\.0
+Content-Type: text/plain
+
+This is a generic message for testing purposes only with regard to some stuff and things:
+
+\[IMAGE\]
+
+  \* Stuff
+
+  \* Things
+
+
+--\S+
+Date: \w+, \d+ \w+ \d+ \d+:\d+:\d+ -\d+
+MIME-Version: 1\.0
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+
+                <p>
+                    This is a generic message for <b>testing purposes only<=
+/b>
+                    with regard to some stuff and things:
+                </p>
+                <img src=3D"t/blank\.gif">
+                <ul>
+                    <li>Stuff</li>
+                    <li>Things</li>
+                </ul>
+=20=20=20=20=20=20=20=20=20=20=20=20=
+
+--[^\-]+--
+
+--[^\-]+--

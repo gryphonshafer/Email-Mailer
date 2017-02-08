@@ -1,0 +1,34 @@
+From: from@example.com
+Subject: Test Email
+To: person_0@example.com
+Date: \w+, \d+ \w+ \d+ \d+:\d+:\d+ -\d+
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="[^"]+"
+Content-Transfer-Encoding: 7bit
+
+
+--\S+
+Date: \w+, \d+ \w+ \d+ \d+:\d+:\d+ -\d+
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="[^"]+"
+Content-Transfer-Encoding: 7bit
+
+
+--\S+
+Date: \w+, \d+ \w+ \d+ \d+:\d+:\d+ -\d+
+MIME-Version: 1.0
+Content-Type: text/plain
+
+This is a generic message for testing purposes only.
+
+--\S+
+Date: \w+, \d+ \w+ \d+ \d+:\d+:\d+ -\d+
+MIME-Version: 1.0
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<p>This is a generic message for <b>testing purposes only</b>.</p>=
+
+--[^\-]+--
+
+--[^\-]+--

@@ -14,30 +14,52 @@ use Email::Sender::Simple 'sendmail';
 
 sub new {
     my $self = shift;
-    $self = ( ref $self ) ? %$self : {@_};
-    $self->{ lc $_ } = delete $self->{$_} for ( grep { /[A-Z]/ } keys %$self );
+
+    unless ( ref $self ) {
+        # $self is not an object, is incoming pair values = make $self object
+        $self = bless( {@_}, $self );
+    }
+    else {
+        # $self is an object = make a new $self object incorporating any new values
+        $self = bless( { %$self, @_ }, ref $self );
+    }
+
+    # for a certain set of keys, ensure they are all lower-case
+    $self->{ lc $_ } = delete $self->{$_}
+        for ( grep { /^(?:to|from|subject|html|text)$/i and /[A-Z]/ } keys %$self );
+
     return $self;
 }
 
 sub send {
     my $self = shift;
 
+    # if @_ is a set of hashrefs, map them into new mail objects; otherwise, just merge in new values;
+    # then iterate through the objects inside the map
     my @mails = map {
+        # make a clean copy of the data so we can return the mail object unchanged at the end
         my $mail = {%$_};
 
+        # process any template functionality (look for values that are scalarrefs)
         if ( ref $mail->{process} eq 'CODE' ) {
-            $mail->{$_} = $mail->{process}->( $mail->{$_}, $mail->{data} || {} )
+            $mail->{$_} = $mail->{process}->( ${ $mail->{$_} }, $mail->{data} || {} )
                 for ( grep { ref $mail->{$_} eq 'SCALAR' } keys %$mail );
         }
 
+        # automatically create the text version from HTML if there is no text version and there is HTML
         $mail->{text} = HTML::FormatText
             ->new( leftmargin => 0, rightmargin => 1_000_000 )
             ->format( HTML::TreeBuilder->new->parse( $mail->{html} ) )
             if ( $mail->{html} and not $mail->{text} );
 
-        my $headers = {%$mail};
-        delete $headers->{$_} for ( qw( html text embed attachments process data transport ) );
+        # create a headers hashref (delete things from a data copy that known to not be headers)
+        my $headers = [
+            map { ucfirst($_) => $mail->{$_} }
+            grep { not /^(?:html|text|embed|attachments|process|data|transport)$/i }
+            sort keys %$mail
+        ];
 
+        # build up an attachments arrayref of attachment MIME objects
         my $attachments = ( not $mail->{attachments} or ref $mail->{attachments} ne 'ARRAY' ) ? [] : [
             map {
                 Email::MIME->create(
@@ -53,16 +75,17 @@ sub send {
             } @{ $mail->{attachments} }
         ];
 
+        # build a single MIME email object to send based on what data we have for the email
         my $email_mime;
         if ( $mail->{text} and not $mail->{html} and @$attachments == 0 ) {
             $email_mime = Email::MIME->create(
-                header => [%$headers],
+                header => $headers,
                 body   => $mail->{text},
             );
         }
         elsif ( $mail->{text} and not $mail->{html} ) {
             $email_mime = Email::MIME->create(
-                header     => [%$headers],
+                header     => $headers,
                 attributes => { content_type => 'multipart/mixed' },
                 parts      => [
                     Email::MIME->create(
@@ -75,24 +98,27 @@ sub send {
         }
         else {
             $email_mime = Email::MIME->create(
-                header     => [%$headers],
+                header     => $headers,
                 attributes => { content_type => 'multipart/mixed' },
                 parts      => [
                     Email::MIME->create_html(
                         header    => [],
                         body      => $mail->{html},
                         text_body => $mail->{text},
-                        embed     => ( ( $mail->{embed} ) ? 1 : 0 ),
+                        embed     => $mail->{embed},
                     ),
                     @$attachments,
                 ],
             );
         }
 
+        # send the email with Email::Sender::Simple
         sendmail( $email_mime, $mail->{transport} );
-        $_;
-    } ( ref $_[0] eq 'HASH' ) ? ( map { $self->new(@_) } @_ ) : $self->new(@_);
 
+        $_;
+    } ( ref $_[0] eq 'HASH' ) ? ( map { $self->new(%$_) } @_ ) : $self->new(@_);
+
+    # return the mail objects as desired by the caller
     return ( wantarray() ) ? (@mails) : \@mails;
 }
 

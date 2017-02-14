@@ -1,6 +1,8 @@
 Revision history for Email::Mailer
 
 {{$NEXT}}
+
+1.04      2017-02-13 20:43:56-08:00 America/Los_Angeles
         - Fix tiny but rather important documentation bug
 
 1.03      2017-02-13 17:12:55-08:00 America/Los_Angeles

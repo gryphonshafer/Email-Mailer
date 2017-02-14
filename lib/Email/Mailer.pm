@@ -56,7 +56,11 @@ sub send {
 
         # create a headers hashref (delete things from a data copy that known to not be headers)
         my $headers = [
-            map { ucfirst($_) => $mail->{$_} }
+            map {
+                $mail->{$_} = join( ',', @{ $mail->{$_} }        ) if ( ref $mail->{$_} eq 'ARRAY' );
+                $mail->{$_} = join( ',', values %{ $mail->{$_} } ) if ( ref $mail->{$_} eq 'HASH'  );
+                ucfirst($_) => $mail->{$_};
+            }
             grep { not /^(?:html|text|embed|attachments|process|data|transport)$/i }
             sort keys %$mail
         ];

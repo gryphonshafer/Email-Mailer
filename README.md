@@ -4,7 +4,7 @@ Email::Mailer - Multi-purpose emailer for HTML, auto-text, attachments, and temp
 
 # VERSION
 
-version 1.02
+version 1.03
 
 [![Build Status](https://travis-ci.org/gryphonshafer/Email-Mailer.svg)](https://travis-ci.org/gryphonshafer/Email-Mailer)
 [![Coverage Status](https://coveralls.io/repos/gryphonshafer/Email-Mailer/badge.png)](https://coveralls.io/r/gryphonshafer/Email-Mailer)
@@ -323,7 +323,7 @@ You can also look for additional information at:
 
 # AUTHOR
 
-Gryphon Shafer &lt;gryphon@cpan.org>
+Gryphon Shafer <gryphon@cpan.org>
 
 # COPYRIGHT AND LICENSE
 

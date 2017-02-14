@@ -1,6 +1,7 @@
 Revision history for Email::Mailer
 
 {{$NEXT}}
+        - Support for arrayrefs of header data (like "to => ['a','b']")
 
 1.02      2017-02-09 09:37:19-08:00 America/Los_Angeles
         - Fix date bug in test qr files

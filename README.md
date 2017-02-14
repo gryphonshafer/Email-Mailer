@@ -4,7 +4,7 @@ Email::Mailer - Multi-purpose emailer for HTML, auto-text, attachments, and temp
 
 # VERSION
 
-version 1.03
+version 1.04
 
 [![Build Status](https://travis-ci.org/gryphonshafer/Email-Mailer.svg)](https://travis-ci.org/gryphonshafer/Email-Mailer)
 [![Coverage Status](https://coveralls.io/repos/gryphonshafer/Email-Mailer/badge.png)](https://coveralls.io/r/gryphonshafer/Email-Mailer)
@@ -106,7 +106,7 @@ version 1.03
         process => sub {
             my ( $template, $data ) = @_;
             my $content;
-            $tt->process( $template, $data, \$content );
+            $tt->process( \$template, $data, \$content );
             return $content;
         },
     );
@@ -271,7 +271,7 @@ template text and a hashref of the data for the message.
         process => sub {
             my ( $template, $data ) = @_;
             my $content;
-            $tt->process( $template, $data, \$content );
+            $tt->process( \$template, $data, \$content );
             return $content;
         },
     );

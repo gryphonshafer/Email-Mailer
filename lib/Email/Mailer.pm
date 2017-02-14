@@ -238,7 +238,7 @@ __END__
         process => sub {
             my ( $template, $data ) = @_;
             my $content;
-            $tt->process( $template, $data, \$content );
+            $tt->process( \$template, $data, \$content );
             return $content;
         },
     );
@@ -403,7 +403,7 @@ template text and a hashref of the data for the message.
         process => sub {
             my ( $template, $data ) = @_;
             my $content;
-            $tt->process( $template, $data, \$content );
+            $tt->process( \$template, $data, \$content );
             return $content;
         },
     );

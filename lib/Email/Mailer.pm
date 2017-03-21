@@ -119,7 +119,7 @@ sub send {
         }
 
         # send the email with Email::Sender::Simple
-        sendmail( $email_mime, $mail->{transport} );
+        sendmail( $email_mime, { transport => $mail->{transport} } );
 
         $_;
     } ( ref $_[0] eq 'HASH' ) ? ( map { $self->new(%$_) } @_ ) : $self->new(@_);

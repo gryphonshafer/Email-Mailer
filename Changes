@@ -1,6 +1,7 @@
 Revision history for Email::Mailer
 
 {{$NEXT}}
+        - Bug fix for using the "transport" key (was previously ignoring value)
 
 1.04      2017-02-13 20:43:56-08:00 America/Los_Angeles
         - Fix tiny but rather important documentation bug

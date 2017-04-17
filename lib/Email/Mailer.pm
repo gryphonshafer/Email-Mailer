@@ -8,7 +8,7 @@ use warnings;
 use HTML::FormatText;
 use HTML::TreeBuilder;
 use IO::All 'io';
-use Email::MIME;
+use Email::MIME 1.940;
 use Email::MIME::CreateHTML;
 use Email::Sender::Simple 'sendmail';
 

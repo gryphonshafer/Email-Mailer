@@ -1,6 +1,8 @@
 Revision history for Email::Mailer
 
 {{$NEXT}}
+
+1.07      2017-04-28 11:04:26-04:00 America/New_York
         - Looser tests to account for hash randomization
 
 1.06      2017-04-17 13:29:09-04:00 America/New_York

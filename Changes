@@ -1,6 +1,7 @@
 Revision history for Email::Mailer
 
 {{$NEXT}}
+        - Looser tests to account for hash randomization
 
 1.06      2017-04-17 13:29:09-04:00 America/New_York
         - Require version >= 1.940 of Email::MIME

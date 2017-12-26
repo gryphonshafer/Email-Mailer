@@ -1,6 +1,7 @@
 Revision history for Email::Mailer
 
 {{$NEXT}}
+        - Adding Perl versions to test; annual general update for 2018
 
 1.07      2017-04-28 11:04:26-04:00 America/New_York
         - Looser tests to account for hash randomization

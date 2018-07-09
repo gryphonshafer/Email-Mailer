@@ -72,7 +72,7 @@ sub send {
                     attributes => {
                         disposition  => 'attachment',
                         content_type => $_->{ctype} || 'application/octet-stream',
-                        encoding     => 'quoted-printable',
+                        encoding     => $_->{encoding} // 'base64',
                         filename     => $_->{name} || $_->{filename} || $_->{source},
                         name         => $_->{name} || $_->{filename} || $_->{source},
                     },
@@ -197,9 +197,10 @@ __END__
                 source => 'file.pdf',
             },
             {
-                ctype   => 'application/pdf',
-                content => io('file.pdf')->binary->all,
-                name    => 'file.pdf',
+                ctype    => 'application/pdf',
+                content  => io('file.pdf')->binary->all,
+                encoding => 'base64',
+                name     => 'file.pdf',
             },
         ],
     );
@@ -380,12 +381,18 @@ filename of the attachment.
                 source => 'file.pdf',
             },
             {
-                ctype   => 'application/pdf',
-                content => io('file.pdf')->binary->all,
-                name    => 'file.pdf',
+                ctype    => 'application/pdf',
+                content  => io('file.pdf')->binary->all,
+                encoding => 'base64',
+                name     => 'file.pdf',
             },
         ],
     );
+
+An optional parameter of "encoding" can be supplied in a hashref to
+"attachments" to indicate what encoding the attachment should be encoded as.
+If not specified, the default is "base64" encoding, which works in most cases.
+Another popular choice is "quoted-printable".
 
 =head2 process
 

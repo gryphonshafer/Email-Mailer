@@ -49,10 +49,14 @@ sub send {
         }
 
         # automatically create the text version from HTML if there is no text version and there is HTML
-        $mail->{text} = HTML::FormatText
-            ->new( leftmargin => 0, rightmargin => 1_000_000 )
-            ->format( HTML::TreeBuilder->new->parse( $mail->{html} ) )
-            if ( $mail->{html} and not $mail->{text} );
+        if ( $mail->{html} and not $mail->{text} ) {
+            my $width = $mail->{width} // 72;
+            $width ||= 1_000_000;
+
+            $mail->{text} = HTML::FormatText
+                ->new( leftmargin => 0, rightmargin => $width )
+                ->format( HTML::TreeBuilder->new->parse( $mail->{html} ) );
+        }
 
         # create a headers hashref (delete things from a data copy that known to not be headers)
         my $headers = [
@@ -61,7 +65,7 @@ sub send {
                 $mail->{$_} = join( ',', values %{ $mail->{$_} } ) if ( ref $mail->{$_} eq 'HASH'  );
                 ucfirst($_) => $mail->{$_};
             }
-            grep { not /^(?:html|text|embed|attachments|process|data|transport)$/i }
+            grep { not /^(?:html|text|embed|attachments|process|data|transport|width)$/i }
             sort keys %$mail
         ];
 
@@ -343,6 +347,20 @@ is the template that'll be used to generate HTML content).
 This parameter should contain plain text content (or a template reference). If
 not provided then "text" will be automatically generated based on the "html"
 content.
+
+By default, the text generated will be wrapped at 72 characters width. However,
+you can override that by setting width explicitly:
+
+    Email::Mailer->new->send(
+        to      => $to,
+        from    => $from,
+        subject => $subject,
+        html    => $html,
+        width   => 120,
+    );
+
+If you set a width to 0, this will be interpreted as meaning not to wrap text
+lines.
 
 =head2 embed
 

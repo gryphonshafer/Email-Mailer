@@ -4,7 +4,7 @@ Email::Mailer - Multi-purpose emailer for HTML, auto-text, attachments, and temp
 
 # VERSION
 
-version 1.08
+version 1.09
 
 [![Build Status](https://travis-ci.org/gryphonshafer/Email-Mailer.svg)](https://travis-ci.org/gryphonshafer/Email-Mailer)
 [![Coverage Status](https://coveralls.io/repos/gryphonshafer/Email-Mailer/badge.png)](https://coveralls.io/r/gryphonshafer/Email-Mailer)
@@ -211,6 +211,20 @@ is the template that'll be used to generate HTML content).
 This parameter should contain plain text content (or a template reference). If
 not provided then "text" will be automatically generated based on the "html"
 content.
+
+By default, the text generated will be wrapped at 72 characters width. However,
+you can override that by setting width explicitly:
+
+    Email::Mailer->new->send(
+        to      => $to,
+        from    => $from,
+        subject => $subject,
+        html    => $html,
+        width   => 120,
+    );
+
+If you set a width to 0, this will be interpreted as meaning not to wrap text
+lines.
 
 ## embed
 

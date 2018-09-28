@@ -1,6 +1,7 @@
 Revision history for Email::Mailer
 
 {{$NEXT}}
+        - Fix bug for generating text from HTML that includes <hr>
 
 1.08      2018-07-09 08:18:43-07:00 America/Los_Angeles
         - Adding Perl versions to test; annual general update for 2018

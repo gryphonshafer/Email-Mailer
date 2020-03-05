@@ -471,9 +471,7 @@ You can also look for additional information at:
 
 =for :list
 * L<GitHub|https://github.com/gryphonshafer/Email-Mailer>
-* L<CPAN|http://search.cpan.org/dist/Email-Mailer>
 * L<MetaCPAN|https://metacpan.org/pod/Email::Mailer>
-* L<AnnoCPAN|http://annocpan.org/dist/Email-Mailer>
 * L<Travis CI|https://travis-ci.org/gryphonshafer/Email-Mailer>
 * L<Coveralls|https://coveralls.io/r/gryphonshafer/Email-Mailer>
 * L<CPANTS|http://cpants.cpanauthors.org/dist/Email-Mailer>

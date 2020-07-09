@@ -4,7 +4,7 @@ Email::Mailer - Multi-purpose emailer for HTML, auto-text, attachments, and temp
 
 # VERSION
 
-version 1.09
+version 1.10
 
 [![Build Status](https://travis-ci.org/gryphonshafer/Email-Mailer.svg)](https://travis-ci.org/gryphonshafer/Email-Mailer)
 [![Coverage Status](https://coveralls.io/repos/gryphonshafer/Email-Mailer/badge.png)](https://coveralls.io/r/gryphonshafer/Email-Mailer)
@@ -118,7 +118,7 @@ version 1.09
 
 # DESCRIPTION
 
-Following the charter and example of [Email::Simple](https://metacpan.org/pod/Email::Simple), this module provides a
+Following the charter and example of [Email::Simple](https://metacpan.org/pod/Email%3A%3ASimple), this module provides a
 simple and flexible interface to sending various types of email including
 plain text, HTML/text multi-part, attachment support, and template hooks.
 The module depends on a series of great modules in the Email::\* and HTML::\*
@@ -310,7 +310,7 @@ subref.
 ## transport
 
 By default, this module will try to pick an appropriate transport. (Well,
-technically, [Email::Sender::Simple](https://metacpan.org/pod/Email::Sender::Simple) does that for us.) If you want to override
+technically, [Email::Sender::Simple](https://metacpan.org/pod/Email%3A%3ASender%3A%3ASimple) does that for us.) If you want to override
 that and set your own transport, use the "transport" parameter.
 
     use Email::Sender::Transport::SMTP;
@@ -328,15 +328,13 @@ that and set your own transport, use the "transport" parameter.
 
 # SEE ALSO
 
-[Email::MIME](https://metacpan.org/pod/Email::MIME), [Email::MIME::CreateHTML](https://metacpan.org/pod/Email::MIME::CreateHTML), [Email::Sender::Simple](https://metacpan.org/pod/Email::Sender::Simple),
-[Email::Sender::Transport](https://metacpan.org/pod/Email::Sender::Transport), [HTML::FormatText](https://metacpan.org/pod/HTML::FormatText), [HTML::TreeBuilder](https://metacpan.org/pod/HTML::TreeBuilder).
+[Email::MIME](https://metacpan.org/pod/Email%3A%3AMIME), [Email::MIME::CreateHTML](https://metacpan.org/pod/Email%3A%3AMIME%3A%3ACreateHTML), [Email::Sender::Simple](https://metacpan.org/pod/Email%3A%3ASender%3A%3ASimple),
+[Email::Sender::Transport](https://metacpan.org/pod/Email%3A%3ASender%3A%3ATransport), [HTML::FormatText](https://metacpan.org/pod/HTML%3A%3AFormatText), [HTML::TreeBuilder](https://metacpan.org/pod/HTML%3A%3ATreeBuilder).
 
 You can also look for additional information at:
 
 - [GitHub](https://github.com/gryphonshafer/Email-Mailer)
-- [CPAN](http://search.cpan.org/dist/Email-Mailer)
 - [MetaCPAN](https://metacpan.org/pod/Email::Mailer)
-- [AnnoCPAN](http://annocpan.org/dist/Email-Mailer)
 - [Travis CI](https://travis-ci.org/gryphonshafer/Email-Mailer)
 - [Coveralls](https://coveralls.io/r/gryphonshafer/Email-Mailer)
 - [CPANTS](http://cpants.cpanauthors.org/dist/Email-Mailer)
@@ -348,7 +346,7 @@ Gryphon Shafer <gryphon@cpan.org>
 
 # COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2018 by Gryphon Shafer.
+This software is copyright (c) 2020 by Gryphon Shafer.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

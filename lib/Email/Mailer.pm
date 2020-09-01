@@ -229,7 +229,7 @@ __END__
         subject => $subject,
         html    => $html,
     );
-    my $mail_1->new( from => 'different_address@example.com' );
+    my $mail_1 = $mail_0->new( from => 'different_address@example.com' );
     $mail_0->send;
     $mail_1->send;
 

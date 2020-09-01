@@ -4,7 +4,7 @@ Email::Mailer - Multi-purpose emailer for HTML, auto-text, attachments, and temp
 
 # VERSION
 
-version 1.10
+version 1.11
 
 [![Build Status](https://travis-ci.org/gryphonshafer/Email-Mailer.svg)](https://travis-ci.org/gryphonshafer/Email-Mailer)
 [![Coverage Status](https://coveralls.io/repos/gryphonshafer/Email-Mailer/badge.png)](https://coveralls.io/r/gryphonshafer/Email-Mailer)
@@ -93,7 +93,7 @@ version 1.10
         subject => $subject,
         html    => $html,
     );
-    my $mail_1->new( from => 'different_address@example.com' );
+    my $mail_1 = $mail_0->new( from => 'different_address@example.com' );
     $mail_0->send;
     $mail_1->send;
 

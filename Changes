@@ -1,6 +1,7 @@
 Revision history for Email::Mailer
 
 {{$NEXT}}
+        - Fix POD bug containing improper construction
 
 1.10      2020-07-09 07:54:45-07:00 America/Los_Angeles
         - Update test regex files patterns

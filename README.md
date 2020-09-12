@@ -4,7 +4,7 @@ Email::Mailer - Multi-purpose emailer for HTML, auto-text, attachments, and temp
 
 # VERSION
 
-version 1.11
+version 1.12
 
 [![Build Status](https://travis-ci.org/gryphonshafer/Email-Mailer.svg)](https://travis-ci.org/gryphonshafer/Email-Mailer)
 [![Coverage Status](https://coveralls.io/repos/gryphonshafer/Email-Mailer/badge.png)](https://coveralls.io/r/gryphonshafer/Email-Mailer)
@@ -325,6 +325,28 @@ that and set your own transport, use the "transport" parameter.
             port => 25,
         }),
     );
+
+# AUTOMATIC HEADER-IFICATION
+
+There are some automatic header-ification features to be aware of. Unless you
+specify a value, the `Content-Type` and `Content-Transfer-Encoding` are
+set as "text/plain; charset=us-ascii" and "quoted-printable" respectively, as
+if you set the following:
+
+    Email::Mailer->send(
+        to        => $to,
+        from      => $from,
+        subject   => $subject,
+        html      => $html,
+
+        'Content-Type'              => 'text/plain; charset=us-ascii',
+        'Content-Transfer-Encoding' => 'quoted-printable',
+    );
+
+Also, normally your `to`, `from`, and `subject` values are left untouched;
+however, for any of these that contain non-ASCII characters, they will be
+mimewords-encoded via [MIME::Words](https://metacpan.org/pod/MIME%3A%3AWords). If you don't like how that works, just
+encode them however you'd like to ASCII.
 
 # SEE ALSO
 

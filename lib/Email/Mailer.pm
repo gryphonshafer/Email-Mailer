@@ -59,15 +59,18 @@ sub send {
                 ->format( HTML::TreeBuilder->new->parse( $mail->{html} ) );
         }
 
+        $mail->{'Content-Transfer-Encoding'} //= 'quoted-printable';
+        $mail->{'Content-Type'}              ||= 'text/plain; charset=us-ascii';
+
+        my $charset;
+        ($charset = $mail->{'Content-Type'}) =~ s/.*charset=([^;]+);?.*/$1/
+            if ( index($mail->{'Content-Type'}, 'charset') != -1 );
         my @keys = keys %$mail;
         for my $name ( qw( to from subject ) ) {
             my ($key) = grep { lc($_) eq $name } @keys;
-            $mail->{$key} = encode_mimewords( $mail->{$key} )
-                if ( $key and defined $mail->{$key} and $mail->{$key} =~ /[^[:ascii:]]/ );
+            $mail->{$key} = encode_mimewords( $mail->{$key}, Charset => $charset )
+                if ( $key and defined $mail->{$key} and $mail->{$key} =~ /[^[:ascii:]]/ and $charset);
         }
-
-        $mail->{'Content-Transfer-Encoding'} //= 'quoted-printable';
-        $mail->{'Content-Type'}              ||= 'text/plain; charset=us-ascii';
 
         # create a headers hashref (delete things from a data copy that known to not be headers)
         my $headers = [

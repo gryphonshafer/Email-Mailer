@@ -4,7 +4,7 @@ Email::Mailer - Multi-purpose emailer for HTML, auto-text, attachments, and temp
 
 # VERSION
 
-version 1.12
+version 1.13
 
 [![Build Status](https://travis-ci.org/gryphonshafer/Email-Mailer.svg)](https://travis-ci.org/gryphonshafer/Email-Mailer)
 [![Coverage Status](https://coveralls.io/repos/gryphonshafer/Email-Mailer/badge.png)](https://coveralls.io/r/gryphonshafer/Email-Mailer)
@@ -345,8 +345,9 @@ if you set the following:
 
 Also, normally your `to`, `from`, and `subject` values are left untouched;
 however, for any of these that contain non-ASCII characters, they will be
-mimewords-encoded via [MIME::Words](https://metacpan.org/pod/MIME%3A%3AWords). If you don't like how that works, just
-encode them however you'd like to ASCII.
+mimewords-encoded via [MIME::Words](https://metacpan.org/pod/MIME%3A%3AWords) using the character set defined in
+`Content-Type`. If you don't like how that works, just encode them however
+you'd like to ASCII.
 
 # SEE ALSO
 

@@ -62,14 +62,12 @@ sub send {
         $mail->{'Content-Transfer-Encoding'} //= 'quoted-printable';
         $mail->{'Content-Type'}              ||= 'text/plain; charset=us-ascii';
 
-        my $charset;
-        ($charset = $mail->{'Content-Type'}) =~ s/.*charset=([^;]+);?.*/$1/
-            if ( index($mail->{'Content-Type'}, 'charset') != -1 );
-        my @keys = keys %$mail;
+        my $charset = ( $mail->{'Content-Type'} =~ /\bcharset\s*=\s*([^;]+)/i ) ? $1 : 'ISO-8859-1';
+        my @keys    = keys %$mail;
         for my $name ( qw( to from subject ) ) {
             my ($key) = grep { lc($_) eq $name } @keys;
             $mail->{$key} = encode_mimewords( $mail->{$key}, Charset => $charset )
-                if ( $key and defined $mail->{$key} and $mail->{$key} =~ /[^[:ascii:]]/ and $charset);
+                if ( $key and defined $mail->{$key} and $mail->{$key} =~ /[^[:ascii:]]/ );
         }
 
         # create a headers hashref (delete things from a data copy that known to not be headers)
@@ -495,8 +493,9 @@ if you set the following:
 
 Also, normally your C<to>, C<from>, and C<subject> values are left untouched;
 however, for any of these that contain non-ASCII characters, they will be
-mimewords-encoded via L<MIME::Words>. If you don't like how that works, just
-encode them however you'd like to ASCII.
+mimewords-encoded via L<MIME::Words> using the character set defined in
+C<Content-Type>. If you don't like how that works, just encode them however
+you'd like to ASCII.
 
 =head1 SEE ALSO
 

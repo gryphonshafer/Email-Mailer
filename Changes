@@ -1,6 +1,7 @@
 Revision history for Email::Mailer
 
 {{$NEXT}}
+        - Improve tests to work when Message-Id header contains line break
 
 1.14      2020-09-16 10:28:24-07:00 America/Los_Angeles
         - Add Message-Id header if not defined

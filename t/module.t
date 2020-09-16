@@ -8,9 +8,7 @@ use File::Basename 'dirname';
 use_ok('Email::Mailer');
 
 my @mail;
-Test::MockObject->fake_module( 'Email::Mailer', 'sendmail', sub {
-    push( @mail, shift );
-} );
+Test::MockObject->fake_module( 'Email::Mailer', 'sendmail', sub { push( @mail, shift ) } );
 
 sub file_qr {
     my $qr = io( dirname($0) . '/qr/' . shift )->all;
@@ -82,12 +80,6 @@ my $as_string = $mail[0]->as_string;
 like( $as_string, file_qr('html_auto_text.qr'), 'html_auto_text.qr' );
 
 my $headers = get_headers($as_string);
-
-use Data::Dumper;
-warn Dumper($headers);
-
-warn $as_string;
-
 like( $headers->[0]{'Message-Id'}, qr/^<[^>]+>$/, 'Message-Id header looks reasonable' );
 like( $headers->[0]{'Content-Type'}, qr|^multipart/mixed\b|, 'Content-Type is multipart/mixed' );
 is( $headers->[0]{'Subject'}, 'Test Email', 'Subject is correct' );

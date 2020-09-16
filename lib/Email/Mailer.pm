@@ -5,12 +5,13 @@ use 5.014;
 use strict;
 use warnings;
 
-use HTML::FormatText;
-use HTML::TreeBuilder;
-use IO::All 'io';
+use Email::MessageID;
 use Email::MIME 1.940;
 use Email::MIME::CreateHTML;
 use Email::Sender::Simple 'sendmail';
+use HTML::FormatText;
+use HTML::TreeBuilder;
+use IO::All 'io';
 use MIME::Words 'encode_mimewords';
 
 # VERSION
@@ -69,6 +70,8 @@ sub send {
             $mail->{$key} = encode_mimewords( $mail->{$key}, Charset => $charset )
                 if ( $key and defined $mail->{$key} and $mail->{$key} =~ /[^[:ascii:]]/ );
         }
+
+        $mail->{'Message-Id'} //= Email::MessageID->new->in_brackets;
 
         # create a headers hashref (delete things from a data copy that known to not be headers)
         my $headers = [

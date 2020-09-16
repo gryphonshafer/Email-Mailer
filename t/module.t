@@ -79,6 +79,8 @@ my $headers = get_headers($as_string);
 use Data::Dumper;
 warn Dumper($headers);
 
+warn $as_string;
+
 # like( $headers->[0]{'Message-Id'}, qr/^<[^>]+>$/, 'Message-Id header looks reasonable' );
 # like( $headers->[0]{'Content-Type'}, qr|^multipart/mixed\b|, 'Content-Type is multipart/mixed' );
 # is( $headers->[0]{'Subject'}, 'Test Email', 'Subject is correct' );

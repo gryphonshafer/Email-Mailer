@@ -21,7 +21,7 @@ sub file_qr {
 
 sub get_headers {
     my @headers;
-    push( @headers, { map { split( /:[ ]*/, $_, 2 ) } map { chop; $_ } split( /\n/, $1 ) } )
+    push( @headers, { map { split( /:[ ]*/, $_, 2 ) } split( /\r?\n/, $1 ) } )
         while ( $_[0] =~ /^((?:[\w\-]+:[ ]*[^\n]+\n)+)/mg );
     return \@headers;
 }

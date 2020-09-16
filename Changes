@@ -1,6 +1,8 @@
 Revision history for Email::Mailer
 
 {{$NEXT}}
+
+1.14      2020-09-16 10:28:24-07:00 America/Los_Angeles
         - Add Message-Id header if not defined
         - Improve tests to better handle headers
 

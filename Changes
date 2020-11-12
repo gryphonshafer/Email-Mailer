@@ -1,6 +1,8 @@
 Revision history for Email::Mailer
 
 {{$NEXT}}
+        - Migrate Travis CI and Coveralls to GitHub Actions and Codecov
+        - Update copyright year
 
 1.15      2020-09-16 11:39:54-07:00 America/Los_Angeles
         - Improve tests to work when Message-Id header contains line break

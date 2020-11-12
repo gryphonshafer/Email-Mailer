@@ -155,8 +155,8 @@ __END__
 =begin :badges
 
 =for markdown
-[![Build Status](https://travis-ci.org/gryphonshafer/Email-Mailer.svg)](https://travis-ci.org/gryphonshafer/Email-Mailer)
-[![Coverage Status](https://coveralls.io/repos/gryphonshafer/Email-Mailer/badge.png)](https://coveralls.io/r/gryphonshafer/Email-Mailer)
+[![build](https://github.com/gryphonshafer/Email-Mailer/workflows/build/badge.svg)](https://github.com/gryphonshafer/Email-Mailer/actions?query=workflow%3Abuild)
+[![codecov](https://codecov.io/gh/gryphonshafer/Email-Mailer/graph/badge.svg)](https://codecov.io/gh/gryphonshafer/Email-Mailer)
 
 =end :badges
 
@@ -510,8 +510,8 @@ You can also look for additional information at:
 =for :list
 * L<GitHub|https://github.com/gryphonshafer/Email-Mailer>
 * L<MetaCPAN|https://metacpan.org/pod/Email::Mailer>
-* L<Travis CI|https://travis-ci.org/gryphonshafer/Email-Mailer>
-* L<Coveralls|https://coveralls.io/r/gryphonshafer/Email-Mailer>
+* L<GitHub Actions|https://github.com/gryphonshafer/Email-Mailer/actions>
+* L<Codecov|https://codecov.io/gh/gryphonshafer/Email-Mailer>
 * L<CPANTS|http://cpants.cpanauthors.org/dist/Email-Mailer>
 * L<CPAN Testers|http://www.cpantesters.org/distro/D/Email-Mailer.html>
 

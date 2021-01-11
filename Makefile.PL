@@ -25,17 +25,17 @@ my %WriteMakefileArgs = (
     "HTML::TreeBuilder" => 0,
     "IO::All" => 0,
     "MIME::Words" => 0,
-    "strict" => 0,
-    "warnings" => 0
+    "exact" => 0
   },
   "TEST_REQUIRES" => {
     "File::Basename" => 0,
     "File::Spec" => 0,
     "IO::Handle" => 0,
     "IPC::Open3" => 0,
-    "Test::MockObject" => 0,
+    "Test2::V0" => 0,
     "Test::More" => 0,
-    "Test::Most" => 0
+    "strict" => 0,
+    "warnings" => 0
   },
   "VERSION" => "1.16",
   "test" => {
@@ -57,9 +57,9 @@ my %FallbackPrereqs = (
   "IO::Handle" => 0,
   "IPC::Open3" => 0,
   "MIME::Words" => 0,
-  "Test::MockObject" => 0,
+  "Test2::V0" => 0,
   "Test::More" => 0,
-  "Test::Most" => 0,
+  "exact" => 0,
   "strict" => 0,
   "warnings" => 0
 );

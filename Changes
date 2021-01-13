@@ -1,6 +1,8 @@
 Revision history for Email::Mailer
 
 {{$NEXT}}
+
+1.17      2021-01-13 11:10:25-08:00 America/Los_Angeles
         - Override some minimum version reqs in dist.ini
 
 1.16      2021-01-11 08:50:17-08:00 America/Los_Angeles

@@ -4,7 +4,7 @@ Email::Mailer - Multi-purpose emailer for HTML, auto-text, attachments, and temp
 
 # VERSION
 
-version 1.16
+version 1.17
 
 [![test](https://github.com/gryphonshafer/Email-Mailer/workflows/test/badge.svg)](https://github.com/gryphonshafer/Email-Mailer/actions?query=workflow%3Atest)
 [![codecov](https://codecov.io/gh/gryphonshafer/Email-Mailer/graph/badge.svg)](https://codecov.io/gh/gryphonshafer/Email-Mailer)

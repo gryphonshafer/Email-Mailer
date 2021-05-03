@@ -103,17 +103,17 @@ sub send {
         my $email_mime;
         if ( $mail->{text} and not $mail->{html} and @$attachments == 0 ) {
             $email_mime = Email::MIME->create(
-                header => $headers,
-                body   => $mail->{text},
+                header_str => $headers,
+                body       => $mail->{text},
             );
         }
         elsif ( $mail->{text} and not $mail->{html} ) {
             $email_mime = Email::MIME->create(
-                header     => $headers,
+                header_str => $headers,
                 attributes => { content_type => 'multipart/mixed' },
                 parts      => [
                     Email::MIME->create(
-                        header => [],
+                        header_str => [ map { $_ => $mail->{$_} } 'Content-Transfer-Encoding', 'Content-Type' ],
                         body   => $mail->{text},
                     ),
                     @$attachments,
@@ -121,18 +121,27 @@ sub send {
             );
         }
         else {
+            my $html_email = Email::MIME->create_html(
+                header    => [],
+                body      => $mail->{html},
+                text_body => $mail->{text},
+                embed     => $mail->{embed},
+            );
+
+            $html_email->walk_parts( sub {
+                my ($part) = @_;
+                return if $part->subparts;
+
+                if ( $part->content_type eq 'text/plain' ) {
+                    $part->charset_set($charset);
+                    $part->encoding_set( $mail->{'Content-Transfer-Encoding'} );
+                }
+            } );
+
             $email_mime = Email::MIME->create(
-                header     => $headers,
+                header_str => $headers,
                 attributes => { content_type => 'multipart/mixed' },
-                parts      => [
-                    Email::MIME->create_html(
-                        header    => [],
-                        body      => $mail->{html},
-                        text_body => $mail->{text},
-                        embed     => $mail->{embed},
-                    ),
-                    @$attachments,
-                ],
+                parts      => [ $html_email, @$attachments ],
             );
         }
 

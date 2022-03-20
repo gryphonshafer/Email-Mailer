@@ -4,7 +4,7 @@ Email::Mailer - Multi-purpose emailer for HTML, auto-text, attachments, and temp
 
 # VERSION
 
-version 1.18
+version 1.19
 
 [![test](https://github.com/gryphonshafer/Email-Mailer/workflows/test/badge.svg)](https://github.com/gryphonshafer/Email-Mailer/actions?query=workflow%3Atest)
 [![codecov](https://codecov.io/gh/gryphonshafer/Email-Mailer/graph/badge.svg)](https://codecov.io/gh/gryphonshafer/Email-Mailer)
@@ -369,7 +369,7 @@ Gryphon Shafer <gryphon@cpan.org>
 
 # COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2017-2021 by Gryphon Shafer.
+This software is Copyright (c) 2017-2050 by Gryphon Shafer.
 
 This is free software, licensed under:
 

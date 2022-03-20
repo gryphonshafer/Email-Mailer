@@ -1,6 +1,7 @@
 Revision history for Email::Mailer
 
 {{$NEXT}}
+        - Minor documentation update
 
 1.18      2021-05-03 07:21:02-07:00 America/Los_Angeles
         - Fix text-parts missing charset and content-transfer-encoding

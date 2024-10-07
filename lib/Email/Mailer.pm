@@ -12,6 +12,7 @@ use HTML::FormatText;
 use HTML::TreeBuilder;
 use IO::All 'io';
 use MIME::Words 'encode_mimewords';
+use Encode qw( encode is_utf8 );
 
 # VERSION
 
@@ -56,7 +57,9 @@ sub send {
 
             $mail->{text} = HTML::FormatText
                 ->new( leftmargin => 0, rightmargin => $width )
-                ->format( HTML::TreeBuilder->new->parse( $mail->{html} ) );
+                ->format( HTML::TreeBuilder->new->parse( $mail->{html} . "\n" ) );
+
+            $mail->{text} = encode( 'UTF-8', $mail->{text} ) if is_utf8( $mail->{text} );
         }
 
         $mail->{'Content-Transfer-Encoding'} //= 'quoted-printable';
@@ -122,21 +125,15 @@ sub send {
         }
         else {
             my $html_email = Email::MIME->create_html(
-                header    => [],
-                body      => $mail->{html},
-                text_body => $mail->{text},
-                embed     => $mail->{embed},
+                header               => [],
+                body                 => $mail->{html},
+                text_body            => $mail->{text},
+                embed                => $mail->{embed},
+                text_body_attributes => {
+                    charset  => 'UTF-8',
+                    encoding => 'quoted-printable',
+                },
             );
-
-            $html_email->walk_parts( sub {
-                my ($part) = @_;
-                return if $part->subparts;
-
-                if ( $part->content_type eq 'text/plain' ) {
-                    $part->charset_set($charset);
-                    $part->encoding_set( $mail->{'Content-Transfer-Encoding'} );
-                }
-            } );
 
             $email_mime = Email::MIME->create(
                 header_str => $headers,

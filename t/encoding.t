@@ -73,7 +73,7 @@ for (
     $_->[1]{text} = 'E = mc^2; ' . $_->[1]{text} if ( exists $_->[1]{text} );
     $_->[1]{html} = 'E = mc^2; ' . $_->[1]{html} if ( exists $_->[1]{html} );
 
-    Email::Mailer->new( $_->[1]->%* )->send;
+    Email::Mailer->new( %{ $_->[1] } )->send;
 
     like( $mail[-1]->as_string, $_->[2], $_->[0] );
 }

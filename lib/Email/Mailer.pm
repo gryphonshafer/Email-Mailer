@@ -1,7 +1,7 @@
 package Email::Mailer;
 # ABSTRACT: Multi-purpose emailer for HTML, auto-text, attachments, and templates
 
-use 5.014;
+use 5.016;
 use exact -noautoclean;
 
 use Email::MessageID;
